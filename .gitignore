@@ -1,0 +1,7 @@
+.idea
+logs/
+.DS_Store
+phpunit-7.phar
+test.php
+*.tar
+*.zip
