@@ -53,6 +53,7 @@ Patch files in a `pre` directory will be deployed before the upgrade package is 
 
 Patch files in a `post` directory will be deployed after the upgrade package is finished.
 
+Generally, version-specific patches should be used to get through healthcheck. For bugs that are present after all upgrades are complete, put your patch files in `upgrades/final/files/post`.
 
 ### Custom Upgrade Scripts
 Custom upgrade scripts are similar to the upgrade scripts the coordinator runs. They are kept in `upgrades/<version>/scripts/[pre|post]`.
@@ -64,16 +65,37 @@ The coordinator will run the `pre` scripts after deploying the `pre` patch files
 The upgrade scripts must extend the class `\Sugarcrm\Sugarcrm\UpgradeCoordinator\lib\UpgradeScript`. See the file `lib/UpgradeScript.php` and `lib/UpgradeScriptManager.php` for more details.
 
 
+## The Final Upgrade Directory
+In `upgrades`, you will find `upgrades/final`. This is the directory where you will put most of your fixes.
+
+Any patches that should be applied after all upgrades are complete go in `upgrades/final/files/post`
+
+Any upgrade scripts that should be run after all upgrades are complete for in `upgrades/final/scripts/post`
+
+The purpose of the `final` directory is to allow you to add another upgrade step without having to move patch files you want to run after all your upgrades are complete.
+
 ## Running the Upgrade Coordinator
 It's this simple:
 ```bash
-php UpgradeCoordinator.php <path_to_sugar_instance> [path_to_php_binary]
+php UpgradeCoordinator.php </path/to/sugar/instance/> [/path/to/php/binary]
 ```
+The <path/to/sugar/instance/ should be an absolute path.
+
 The path to the php binary is *optional* - don't include it if you don't need to.
 
 ## What Happens Next?
 
+### Passing Healthcheck
 The first time you run the coordinator on a highly customized instance, you'll probably fail healthcheck. To understand why, look in `logs`. You will find the coordinator's log file as well as the log files that the Silent Upgrader produces and from there you'll have to work out what healthcheck is complaining about.
 When you understand what you need to change to pass healthcheck, you will probably need to add patch files in `upgrades/<version>/files/pre/sugar/application/file/path.ext`
+If you need to revert such changes afterwards, you can do that in `upgrades/<version>/files/post`.
 
+You'll probably have to repeat that process for each upgrade you want to run. 
+
+### Post upgrade bug fixing.
+After the upgrades are complete, you'll need to test the whole application, especially your customizations, to make sure they all still work.
+
+It's likely some of your customizations will have some issues, and you'll need to update files to address those issues.
+
+Those fixes go in `upgrades/final/files/post`, which works just like the other `files` directories.
 
