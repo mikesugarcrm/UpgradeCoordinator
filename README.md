@@ -46,7 +46,7 @@ The coordinator will re-zip these files when the time comes.
 Patch files are just sugar application files. Patch files go in `upgrades/<version>/files/[pre|post]`, and then they should mirror the sugar application directory structure, i.e.
 
 ```bash
-upgrades/9.0.2/files/post/custom/Extension/modules/Cases/Ext/LogicHooks/logic_hooks.php
+upgrades/9.2.0/files/post/custom/Extension/modules/Cases/Ext/LogicHooks/logic_hooks.php
 ```
 
 Patch files in a `pre` directory will be deployed before the upgrade package is run.
@@ -70,7 +70,7 @@ In `upgrades`, you will find `upgrades/final`. This is the directory where you w
 
 Any patches that should be applied after all upgrades are complete go in `upgrades/final/files/post`
 
-Any upgrade scripts that should be run after all upgrades are complete for in `upgrades/final/scripts/post`
+Any upgrade scripts that should be run after all upgrades are complete go in `upgrades/final/scripts/post`
 
 The purpose of the `final` directory is to allow you to add another upgrade step without having to move patch files you want to run after all your upgrades are complete.
 
