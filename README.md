@@ -12,7 +12,7 @@ You can install and run the coordinator from any directory on the machine where 
 
 The upgrades to be run are determined by the contents of the upgrades/ directory.
 To add an additional upgrade, create a directory in `upgrades/` named for the target version number of that upgrade, i.e.:
-`upgrades/9.0.2`
+`upgrades/9.2.0`
 
 Repeat this process for every upgrade you plan to run.
 
